@@ -24,7 +24,7 @@ void breakpad_ExceptionHandler()
            printf("Handler exist \n");
            return ;
        }
-	excHandler = new google_breakpad::ExceptionHandler(google_breakpad::MinidumpDescriptor("/tmp"), NULL, breakpadDumpCallback, NULL, true, -1);
+	excHandler = new google_breakpad::ExceptionHandler(google_breakpad::MinidumpDescriptor("/minidumps"), NULL, breakpadDumpCallback, NULL, true, -1);
         printf("\t\t\t\t ******** breakpad_ExceptionHandler EXIT****************** \n");
 }
 
