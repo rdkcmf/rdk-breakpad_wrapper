@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-AM_CXXFLAGS = -Wall -fPIC
+AM_CXXFLAGS = -Wall -fPIC -std=c++0x
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = libbreakpadwrapper.la
