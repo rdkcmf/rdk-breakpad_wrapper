@@ -42,7 +42,11 @@ void breakpad_ExceptionHandler()
            printf("Handler exist \n");
            return ;
        }
+#ifdef MINIDUMP_RDKV 
+	excHandler = new google_breakpad::ExceptionHandler(google_breakpad::MinidumpDescriptor("/opt/minidumps"), NULL, breakpadDumpCallback, NULL, true, -1);
+#else
 	excHandler = new google_breakpad::ExceptionHandler(google_breakpad::MinidumpDescriptor("/minidumps"), NULL, breakpadDumpCallback, NULL, true, -1);
+#endif
         printf("\t\t\t\t ******** breakpad_ExceptionHandler EXIT****************** \n");
 }
 
