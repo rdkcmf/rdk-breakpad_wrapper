@@ -102,6 +102,8 @@ fi
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
 
+DEBUG_CXXFLAGS=" "
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
 AC_C_INLINE
@@ -111,9 +113,22 @@ AC_FUNC_MALLOC
 
 AC_SUBST(CCSP_ARCH)
 
+AC_ARG_ENABLE([debug],
+        AS_HELP_STRING([--enable-debug],[enable debug build]),
+        [
+          case "${enableval}" in
+           yes) DEBUG_CXXFLAGS="-D_DEBUG_";;
+           no) DEBUG_CXXFLAGS=" ";;
+          *) AC_MSG_ERROR([bad value ${enableval} for --enable-headless ]) ;;
+           esac
+           ],
+         [echo "headless build is enable"])
+
 AC_CONFIG_FILES(
 	Makefile
 )
+
+AC_SUBST(DEBUG_CXXFLAGS)
 
 AC_OUTPUT
 
