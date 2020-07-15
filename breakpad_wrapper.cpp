@@ -25,8 +25,10 @@ static bool breakpadDumpCallback(const google_breakpad::MinidumpDescriptor& desc
                                                                 bool succeeded)
 {
         /* Do the desired exit process here*/
+#ifdef _DEBUG_
         printf("breakpad Call back ..................................................");
         printf("Print descriptor path: %s\n", descriptor.path());
+#endif
         return succeeded;
 }
 
@@ -35,11 +37,15 @@ void breakpad_ExceptionHandler()
 
 {
 
+#ifdef _DEBUG_
         printf("\t\t\t\t ********ENTER breakpad_ExceptionHandler****************** \n");
+#endif
 	static google_breakpad::ExceptionHandler* excHandler = NULL;
        if (excHandler)
        {
+       #ifdef _DEBUG_
            printf("Handler exist \n");
+       #endif
            return ;
        }
 #ifdef MINIDUMP_RDKV 
@@ -47,6 +53,8 @@ void breakpad_ExceptionHandler()
 #else
 	excHandler = new google_breakpad::ExceptionHandler(google_breakpad::MinidumpDescriptor("/minidumps"), NULL, breakpadDumpCallback, NULL, true, -1);
 #endif
+#ifdef _DEBUG_
         printf("\t\t\t\t ******** breakpad_ExceptionHandler EXIT****************** \n");
+#endif
 }
 
