@@ -24,9 +24,6 @@ extern "C"
 {
 #endif//__cplusplus
 void breakpad_ExceptionHandler(void);
-#ifdef MINIDUMP_RDKV   
-void breakpad_autoconstruct(void);
-#endif  
 #ifdef __cplusplus
 }
 #endif//__cplusplus

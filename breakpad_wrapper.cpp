@@ -50,11 +50,3 @@ void breakpad_ExceptionHandler()
         printf("\t\t\t\t ******** breakpad_ExceptionHandler EXIT****************** \n");
 }
 
-#ifdef MINIDUMP_RDKV 
-void __attribute__ ((constructor)) breakpad_autoconstruct(void)
-{
-
-    breakpad_ExceptionHandler();
-}
-#endif
-
