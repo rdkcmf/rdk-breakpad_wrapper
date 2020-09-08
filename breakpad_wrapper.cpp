@@ -58,3 +58,11 @@ void breakpad_ExceptionHandler()
 #endif
 }
 
+#ifdef MINIDUMP_RDKV
+void __attribute__ ((constructor)) breakpad_autoconstruct(void)
+{
+
+    breakpad_ExceptionHandler();
+}
+#endif
+
