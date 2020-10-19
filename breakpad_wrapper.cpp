@@ -41,6 +41,22 @@ void breakpad_ExceptionHandler()
         printf("\t\t\t\t ********ENTER breakpad_ExceptionHandler****************** \n");
 #endif
 	static google_breakpad::ExceptionHandler* excHandler = NULL;
+#ifdef MINIDUMP_RDKV
+	const char *minidump_path = NULL;
+        FILE *fp;
+        if  ( fp = fopen("/tmp/.SecureDumpEnable", "r") )
+        {
+                //RFC Settings for SecureDump is: true
+                minidump_path =  "/opt/secure/minidumps";
+                fclose(fp);
+        }
+        else
+        {
+                // "RFC Settings for SecureDump is : false
+                minidump_path = "/opt/minidumps";
+        }
+
+#endif
        if (excHandler)
        {
        #ifdef _DEBUG_
@@ -48,8 +64,9 @@ void breakpad_ExceptionHandler()
        #endif
            return ;
        }
-#ifdef MINIDUMP_RDKV 
-	excHandler = new google_breakpad::ExceptionHandler(google_breakpad::MinidumpDescriptor("/opt/minidumps"), NULL, breakpadDumpCallback, NULL, true, -1);
+#ifdef MINIDUMP_RDKV
+	google_breakpad::MinidumpDescriptor descriptor(minidump_path);
+	excHandler = new google_breakpad::ExceptionHandler(descriptor, NULL, breakpadDumpCallback, NULL, true, -1);
 #else
 	excHandler = new google_breakpad::ExceptionHandler(google_breakpad::MinidumpDescriptor("/minidumps"), NULL, breakpadDumpCallback, NULL, true, -1);
 #endif
