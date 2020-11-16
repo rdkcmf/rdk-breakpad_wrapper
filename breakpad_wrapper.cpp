@@ -42,18 +42,13 @@ void breakpad_ExceptionHandler()
 #endif
 	static google_breakpad::ExceptionHandler* excHandler = NULL;
 #ifdef MINIDUMP_RDKV
-	const char *minidump_path = NULL;
+	const char *minidump_path = "/opt/secure/minidumps";
         FILE *fp;
-        if  ( fp = fopen("/tmp/.SecureDumpEnable", "r") )
-        {
-                //RFC Settings for SecureDump is: true
-                minidump_path =  "/opt/secure/minidumps";
-                fclose(fp);
-        }
-        else
+        if(( fp = fopen("/tmp/.SecureDumpDisable", "r")) != NULL)
         {
                 // "RFC Settings for SecureDump is : false
                 minidump_path = "/opt/minidumps";
+		fclose(fp);
         }
 
 #endif
