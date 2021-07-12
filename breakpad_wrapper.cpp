@@ -60,8 +60,17 @@ void breakpad_ExceptionHandler()
            return ;
        }
 #ifdef MINIDUMP_RDKV
-	google_breakpad::MinidumpDescriptor descriptor(minidump_path);
-	excHandler = new google_breakpad::ExceptionHandler(descriptor, NULL, breakpadDumpCallback, NULL, true, -1);
+        const char* breakpadFd = getenv("BREAKPAD_FD");
+        if (breakpadFd)
+        {
+                google_breakpad::MinidumpDescriptor descriptor(atoi(breakpadFd));
+                excHandler = new google_breakpad::ExceptionHandler(descriptor, NULL, breakpadDumpCallback, NULL, true, -1);
+        }
+        else
+        {
+                google_breakpad::MinidumpDescriptor descriptor(minidump_path);
+                excHandler = new google_breakpad::ExceptionHandler(descriptor, NULL, breakpadDumpCallback, NULL, true, -1);
+        }
 #else
 	excHandler = new google_breakpad::ExceptionHandler(google_breakpad::MinidumpDescriptor("/minidumps"), NULL, breakpadDumpCallback, NULL, true, -1);
 #endif
